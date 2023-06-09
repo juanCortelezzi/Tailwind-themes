@@ -6,12 +6,14 @@
   "exports": "./dist/index.js",
   "scripts": {
     "dev": "tsup --watch",
-    "build": "tsup"
+    "build": "tsup",
+    "lint": "eslint --ignore-path ../../.gitignore ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@twemes/eslint-config": "^0.0.0",
     "color": "^4.2.3",
     "tailwindcss": "^3.3.2"
   },
