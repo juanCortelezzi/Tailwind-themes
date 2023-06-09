@@ -1,6 +1,7 @@
-const colors = require("tailwindcss/colors");
+import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
 
-module.exports = {
+export default {
   content: [
     // app content
     `src/**/*.{js,ts,jsx,tsx}`,
@@ -16,4 +17,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+} satisfies Config;
