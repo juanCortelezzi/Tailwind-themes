@@ -1,0 +1,8 @@
+{
+  "extends": "@twemes/tsconfig/base.json",
+  "compilerOptions": {
+    "incremental": false
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
+}
