@@ -12,18 +12,17 @@ export const configThemes = <
   const Colors extends string,
   const Themes extends string,
   const Config extends Themes,
->({
-  themes,
-  options,
-}: {
+>(rawConfig?: {
   themes?: Record<Themes, Record<Colors, string>>;
-  options: {
+  options?: {
     asRoot?: Config & Themes; // a little trick to avoid mutating the Themes Generic
     prefersLight?: Config & Themes;
     prefersDark?: Config & Themes;
     attribute?: string;
   };
 }) => {
+  if (!rawConfig) return {};
+  const { themes, options } = rawConfig;
   for (const themeName in themes) {
     for (const colorName in themes[themeName]) {
       try {
@@ -52,7 +51,7 @@ values for each option are unique.
   return { themes, options };
 };
 
-export const themesPlugin = plugin.withOptions<ReturnType<typeof configThemes>>(
+export const themesPlugin = plugin.withOptions<Config>(
   (config) => {
     return ({ addBase, addComponents }) => {
       if (!config.themes) return;

@@ -1,12 +1,9 @@
 {
-  "name": "twemes",
+  "name": "tw-themes",
   "version": "0.0.0",
   "description": "adf",
   "types": "./dist/index.d.ts",
-  "exports": {
-    ".": "./dist",
-    "./styles.css": "./dist/index.css"
-  },
+  "exports": "./dist/index.js",
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup"
@@ -14,11 +11,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "color": "^4.2.3",
+    "tailwindcss": "^3.3.2"
+  },
   "devDependencies": {
     "@twemes/tsconfig": "workspace:*",
     "@types/color": "^3.0.3",
-    "color": "^4.2.3",
-    "tailwindcss": "^3.3.2",
     "tsup": "^6.7.0",
     "typescript": "^5.1.3"
   }

@@ -1,20 +1,27 @@
 import type { Config } from "tailwindcss";
-import colors from "tailwindcss/colors";
+import { configThemes, themesPlugin } from "tw-themes";
+
+const config = configThemes({
+  themes: {
+    light: {
+      base: "#fff",
+      primary: "#000",
+    },
+    dark: {
+      base: "#000",
+      primary: "#fff",
+    }
+  },
+  options: {
+    prefersDark: "dark", 
+    prefersLight: "light",
+  }
+})
 
 export default {
-  content: [
-    // app content
-    `src/**/*.{js,ts,jsx,tsx}`,
-    // include packages if not transpiling
-    // "../../packages/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: [`src/**/*.{ts,tsx}`],
   theme: {
-    extend: {
-      colors: {
-        brandblue: colors.blue[500],
-        brandred: colors.red[500],
-      },
-    },
+    extend: {},
   },
-  plugins: [],
+  plugins: [themesPlugin(config)],
 } satisfies Config;

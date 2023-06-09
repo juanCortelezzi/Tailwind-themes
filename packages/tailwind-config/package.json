@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "main": "index.js",
+  "dependencies": {
+    "tailwindcss": "^3.3.2",
+    "tw-themes": "^0.0.0"
+  },
   "devDependencies": {
-    "@twemes/tsconfig": "workspace:*",
-    "tailwindcss": "^3.2.4"
+    "@twemes/tsconfig": "workspace:*"
   }
 }
