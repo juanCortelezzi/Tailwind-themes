@@ -1,51 +1,70 @@
-# Turborepo Tailwind CSS starter
+# Tailwind themes
 
-This is an official starter Turborepo.
+Dark mode in Tailwind is a little bit weird. You can only have 2 themes, light a
+nd dark, and you have to use the `dark:` directive for every element that you
+want to behave in dark mode.
 
-## Using this example
+Can't we do better? Well, yes, even the Tailwind labs released a
+[video](https://www.youtube.com/watch?v=MAtaT8BZEAo&pp=ygUPdGFpbHdpbmQgdGhlbWVz)
+explaining how to have custom themes. But if you are like me and do not want to
+touch CSS even with a stick, or you want propper lsp support for your custom
+colors, you are out of luck.
 
-Run the following command:
+This plugin aims to solve this issues, it allows you to define your themes in
+the `tailwind.config.{ts/js}` file and the propper css and autocompletions will
+be generated.
 
-```sh
-npx create-turbo@latest -e with-tailwind
+```ts
+// tailwind.config.ts
+//
+// Keep in mind that if you are using ts, you should include this file in your
+// `tsconfig.json`.
+
+import type { Config } from "tailwindcss";
+import { configThemes, themesPlugin } from "tw-themes";
+
+// Define your themes
+const config = configThemes({
+  themes: {
+    light: {
+      base: "#fff",
+      primary: "#000",
+    },
+    dark: {
+      base: "#000",
+      primary: "#fff",
+    },
+    yellow: {
+      base: "#333",
+      primary: "#fbbf24",
+      // Every theme should have the same color names, if you were to delete
+      // any color in this configuration, typescript would shout at you.
+    },
+  },
+  options: {
+    // Notice how the LSP helps you autocomplete the themes.
+
+    // asRoot: "yellow", // :root { /* yellow theme variables */ }
+    prefersDark: "dark", // @media prefers-color-scheme dark { /* dark theme variables */ }
+    prefersLight: "light", // @media prefers-color-scheme light { /* light theme variables */ }
+
+    // attribute: "data-theme", // will output a class called `[data-theme="YOUR_THEME_NAME"]` for each of your themes (DEFAULT).
+    // attribute: "class", // will output a class called `.YOUR_THEME_NAME` for each of your themes.
+    // attribute: "data-colorscheme", // will output a class called `[data-colorscheme="YOUR_THEME_NAME"]` for each of your themes.
+    // attribute: "myrandomattribute", // will output a class called `[myrandomattribute="YOUR_THEME_NAME"]` for each of your themes, IDK why you would do this, but you can.
+
+    // the themes that are not mentioned in the options will create a class
+    // called `[data-theme="<ThemeName>"]` by default, or it will use the
+    // attribute variable to set the class name.
+  },
+});
+
+export default {
+  content: [`src/**/*.{ts,tsx}`],
+  theme: {
+    extend: {},
+  },
+  // Use the plugin passing the config.
+  plugins: [themesPlugin(config)],
+} satisfies Config;
 ```
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
-- `web`: another [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
-- `ui`: a stub React component library with [Tailwind CSS](https://tailwindcss.com/) shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Building packages/ui
-
-This example is setup to build `packages/ui` and output the transpiled source and compiled styles to `dist/`. This was chosen to make sharing one `tailwind.config.js` as easy as possible, and to ensure only the CSS that is used by the current application and its dependencies is generated.
-
-Another option is to consume `packages/ui` directly from source without building. If using this option, you will need to update your `tailwind.config.js` to be aware of your package locations, so it can find all usages of the `tailwindcss` class names.
-
-For example, in [tailwind.config.js](packages/tailwind-config/tailwind.config.js):
-
-```js
-  content: [
-    // app content
-    `src/**/*.{js,ts,jsx,tsx}`,
-    // include packages if not transpiling
-    "../../packages/**/*.{js,ts,jsx,tsx}",
-  ],
-```
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [Tailwind CSS](https://tailwindcss.com/) for styles
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
