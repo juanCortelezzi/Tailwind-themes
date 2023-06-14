@@ -10,13 +10,13 @@ const config = configThemes({
     dark: {
       base: "#000",
       primary: "#fff",
-    }
+    },
   },
   options: {
-    prefersDark: "dark", 
+    prefersDark: "dark",
     prefersLight: "light",
-  }
-})
+  },
+});
 
 export default {
   content: [`src/**/*.{ts,tsx}`],
